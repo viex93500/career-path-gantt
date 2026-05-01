@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Career Path — Stream Data &amp; Tools — Gantt</title>
 
-<!-- Poppins via Google Fonts (charge si Internet dispo, fallback sinon) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -13,93 +12,44 @@
 <style>
   * { box-sizing: border-box; }
   :root {
-    /* Palette deck */
     --navy:        #24226A;
-    --navy-lite:   #EFEEFB;
     --red:         #D44233;
-    --red-lite:    #FBE8E5;
-
-    /* Workstreams (alignés sur le deck PPTX) */
-    --c1:          #0078D4;   --c1-lite: #DAE3F3;   /* Technical Pipeline */
-    --c2:          #C55A11;   --c2-lite: #FCE5D4;   /* Catalog Data Quality */
-    --c3:          #548235;   --c3-lite: #E2EFDA;   /* Mapping Workshops */
-    --c4:          #7030A0;   --c4-lite: #E4D4F4;   /* Governance */
-
-    /* Texte */
+    --c1:          #0078D4;   --c1-lite: #85B7EB;
+    --c2:          #C55A11;   --c2-lite: #F0997B;
+    --c3:          #548235;   --c3-lite: #97C459;
+    --c4:          #7030A0;   --c4-lite: #AFA9EC;
     --text-dark:   #1A1B3A;
     --text-body:   #3A3B5C;
     --text-muted:  #8E8FA8;
-
-    /* UI */
     --bg:          #FAFAFD;
     --border:      #E5E5F0;
   }
-
   body {
     font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-    margin: 0;
-    padding: 24px;
-    background: var(--bg);
-    color: var(--text-dark);
+    margin: 0; padding: 24px; background: var(--bg); color: var(--text-dark);
   }
   .container {
-    max-width: 1280px;
-    margin: 0 auto;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    max-width: 1280px; margin: 0 auto; background: #fff;
+    border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     padding: 28px 32px;
   }
   header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 16px;
-    margin-bottom: 24px;
+    display: flex; justify-content: space-between; align-items: flex-start;
+    border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 24px;
   }
-  header h1 {
-    font-size: 22px;
-    font-weight: 600;
-    margin: 0 0 6px 0;
-    color: var(--navy);
-  }
-  header .meta {
-    font-size: 13px;
-    color: var(--text-muted);
-  }
+  header h1 { font-size: 22px; font-weight: 600; margin: 0 0 6px 0; color: var(--navy); }
+  header .meta { font-size: 13px; color: var(--text-muted); }
   header .meta strong { color: var(--red); }
   .status-pill {
-    display: inline-block;
-    padding: 6px 14px;
-    border-radius: 999px;
-    font-size: 13px;
-    font-weight: 600;
-    background: #DCFCE7;
-    color: #166534;
+    display: inline-block; padding: 6px 14px; border-radius: 999px;
+    font-size: 13px; font-weight: 600; background: #DCFCE7; color: #166534;
   }
-  .filters {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-  }
-  .filters span.label {
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-right: 4px;
-  }
+  .filters { display: flex; gap: 8px; align-items: center; margin-bottom: 20px; flex-wrap: wrap; }
+  .filters span.label { font-size: 12px; color: var(--text-muted); margin-right: 4px; }
   .filter-btn {
-    font-size: 12px;
-    padding: 6px 12px;
-    border-radius: 6px;
-    border: 1px solid var(--border);
-    background: #fff;
-    cursor: pointer;
-    transition: all 0.15s;
-    font-family: inherit;
-    font-weight: 500;
+    font-size: 12px; padding: 6px 12px; border-radius: 6px;
+    border: 1px solid var(--border); background: #fff; cursor: pointer;
+    transition: all 0.15s; font-family: inherit; font-weight: 500;
   }
   .filter-btn:hover { background: #F3F4F6; }
   .filter-btn.active { background: var(--navy); color: #fff; border-color: var(--navy); }
@@ -112,55 +62,35 @@
   .filter-btn.active.c3 { background: var(--c3); color: #fff; border-color: var(--c3); }
   .filter-btn.active.c4 { background: var(--c4); color: #fff; border-color: var(--c4); }
 
-  .gantt-wrapper {
-    overflow-x: auto;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    background: #fff;
-  }
-  svg.gantt {
-    display: block;
-    min-width: 1100px;
-    font-family: "Poppins", sans-serif;
-  }
+  .gantt-wrapper { overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; background: #fff; }
+  svg.gantt { display: block; min-width: 1100px; font-family: "Poppins", sans-serif; }
   .gantt-row { transition: opacity 0.2s; }
-  .month-label { font-size: 12px; fill: var(--text-muted); font-weight: 500; }
-  .swimlane-label { font-size: 14px; font-weight: 600; }
+  .month-label { font-size: 12px; fill: var(--text-muted); font-weight: 600; text-transform: capitalize; }
+  .week-label { font-size: 9px; fill: var(--text-muted); font-weight: 500; }
+  .swimlane-label { font-size: 13px; font-weight: 600; }
   .task-label { font-size: 11px; fill: var(--text-body); }
   .task-bar { cursor: pointer; transition: opacity 0.15s; }
   .task-bar:hover { opacity: 0.75; }
   .milestone-label { font-size: 10px; font-weight: 600; }
-  .grid-line { stroke: var(--border); stroke-width: 0.5; stroke-dasharray: 2 3; }
-  .month-header-line { stroke: #D1D5DB; stroke-width: 1; }
+  .grid-line { stroke: var(--border); stroke-width: 0.5; }
+  .month-grid-line { stroke: #C8C9D8; stroke-width: 1; }
+  .month-sep { stroke: var(--text-muted); stroke-width: 0.5; opacity: 0.4; }
 
   .legend {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin-top: 16px;
-    padding-top: 16px;
-    border-top: 1px solid var(--border);
-    font-size: 12px;
-    color: var(--text-muted);
+    display: flex; gap: 20px; flex-wrap: wrap;
+    margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border);
+    font-size: 12px; color: var(--text-muted);
   }
   .legend-item { display: inline-flex; align-items: center; gap: 8px; }
   .legend-bar { display: inline-block; width: 18px; height: 6px; border-radius: 3px; }
   .legend-diamond {
-    display: inline-block;
-    width: 0; height: 0;
-    border: 6px solid transparent;
-    border-bottom-color: var(--text-muted);
-    position: relative;
-    top: -3px;
+    display: inline-block; width: 0; height: 0;
+    border: 6px solid transparent; border-bottom-color: var(--text-muted);
+    position: relative; top: -3px;
   }
   .legend-line { display: inline-block; width: 18px; border-top: 2px dashed currentColor; }
 
-  footer {
-    margin-top: 24px;
-    text-align: center;
-    font-size: 11px;
-    color: var(--text-muted);
-  }
+  footer { margin-top: 24px; text-align: center; font-size: 11px; color: var(--text-muted); }
   footer .accent { color: var(--red); }
 
   @media print {
@@ -180,7 +110,7 @@
     <div>
       <h1>Career Path — Stream Data &amp; Tools</h1>
       <div class="meta">
-        Owner&nbsp;: Stream Lead &nbsp;<span class="accent">·</span>&nbsp; Sponsor&nbsp;: Project Sponsor &nbsp;<span class="accent">·</span>&nbsp; MAJ&nbsp;: <span id="today-date">—</span> &nbsp;<span class="accent">·</span>&nbsp; Cible MVP&nbsp;: <strong>septembre 2026</strong>
+        Owner&nbsp;: Stream Lead &nbsp;<span style="color: var(--red);">·</span>&nbsp; Sponsor&nbsp;: Project Sponsor &nbsp;<span style="color: var(--red);">·</span>&nbsp; MAJ&nbsp;: <span id="today-date">—</span> &nbsp;<span style="color: var(--red);">·</span>&nbsp; Cible MVP&nbsp;: <strong>septembre 2026</strong>
       </div>
     </div>
     <div class="status-pill">🟢 ON TRACK</div>
@@ -197,170 +127,174 @@
   </div>
 
   <div class="gantt-wrapper">
-  <svg class="gantt" width="1100" viewBox="0 0 1100 800" xmlns="http://www.w3.org/2000/svg">
-
-    <g id="months-header">
-      <line x1="280" y1="50" x2="1100" y2="50" class="month-header-line"/>
-      <text class="month-label" x="331" y="35" text-anchor="middle">mai 2026</text>
-      <text class="month-label" x="434" y="35" text-anchor="middle">juin</text>
-      <text class="month-label" x="536" y="35" text-anchor="middle">juillet</text>
-      <text class="month-label" x="639" y="35" text-anchor="middle">août</text>
-      <text class="month-label" x="741" y="35" text-anchor="middle">septembre</text>
-      <text class="month-label" x="844" y="35" text-anchor="middle">octobre</text>
-      <text class="month-label" x="946" y="35" text-anchor="middle">novembre</text>
-      <text class="month-label" x="1049" y="35" text-anchor="middle">décembre</text>
-
-      <line x1="280" y1="42" x2="280" y2="730" class="grid-line"/>
-      <line x1="383" y1="42" x2="383" y2="730" class="grid-line"/>
-      <line x1="485" y1="42" x2="485" y2="730" class="grid-line"/>
-      <line x1="588" y1="42" x2="588" y2="730" class="grid-line"/>
-      <line x1="690" y1="42" x2="690" y2="730" class="grid-line"/>
-      <line x1="793" y1="42" x2="793" y2="730" class="grid-line"/>
-      <line x1="895" y1="42" x2="895" y2="730" class="grid-line"/>
-      <line x1="998" y1="42" x2="998" y2="730" class="grid-line"/>
-      <line x1="1100" y1="42" x2="1100" y2="730" class="grid-line"/>
-    </g>
-
-    <!-- ===== Technical Pipeline ===== -->
-    <g class="gantt-row" data-row="c1">
-      <rect x="0" y="60" width="1100" height="120" fill="#DAE3F3" opacity="0.4"/>
-      <text class="swimlane-label" x="14" y="80" fill="#0078D4">Technical Pipeline</text>
-
-      <rect class="task-bar" x="290" y="92" width="80" height="20" rx="4" fill="#85B7EB"/>
-      <text class="task-label" x="14" y="106">Test rapprochement formations &amp; skills</text>
-
-      <rect class="task-bar" x="290" y="118" width="80" height="20" rx="4" fill="#0078D4"/>
-      <text class="task-label" x="14" y="132">Envoi transcript user → Skills platform</text>
-
-      <rect class="task-bar" x="395" y="144" width="90" height="20" rx="4" fill="#85B7EB"/>
-      <text class="task-label" x="14" y="158">Intégration groupe d'availability</text>
-
-      <rect class="task-bar" x="495" y="144" width="195" height="20" rx="4" fill="#85B7EB"/>
-      <text class="task-label" x="14" y="172">Bascule API pérenne LXP &amp; Skills platform</text>
-
-      <g>
-        <polygon points="358,103 370,91 382,103 370,115" fill="#24226A"/>
-        <text class="milestone-label" x="370" y="83" text-anchor="middle" fill="#24226A">20/05 unification LMS</text>
-      </g>
-      <g>
-        <polygon points="473,153 485,141 497,153 485,165" fill="#24226A"/>
-        <text class="milestone-label" x="485" y="180" text-anchor="middle" fill="#24226A">Bout-en-bout</text>
-      </g>
-    </g>
-
-    <!-- ===== Catalog Data Quality ===== -->
-    <g class="gantt-row" data-row="c2">
-      <rect x="0" y="190" width="1100" height="130" fill="#FCE5D4" opacity="0.4"/>
-      <text class="swimlane-label" x="14" y="210" fill="#C55A11">Catalog Data Quality</text>
-
-      <rect class="task-bar" x="290" y="222" width="93" height="20" rx="4" fill="#F0997B"/>
-      <text class="task-label" x="14" y="236">Sprint OneData HR — usage formations</text>
-
-      <rect class="task-bar" x="395" y="248" width="90" height="20" rx="4" fill="#F0997B"/>
-      <text class="task-label" x="14" y="262">Sprint OneData HR — LAT</text>
-
-      <rect class="task-bar" x="395" y="274" width="190" height="20" rx="4" fill="#C55A11"/>
-      <text class="task-label" x="14" y="288">Audit Corporate eLearning (~500)</text>
-
-      <rect class="task-bar" x="495" y="300" width="190" height="20" rx="4" fill="#F0997B"/>
-      <text class="task-label" x="14" y="314">Audits Catalog FR + L&amp;D World Operations</text>
-    </g>
-
-    <!-- ===== Mapping Workshops ===== -->
-    <g class="gantt-row" data-row="c3">
-      <rect x="0" y="330" width="1100" height="220" fill="#E2EFDA" opacity="0.4"/>
-      <text class="swimlane-label" x="14" y="350" fill="#548235">Mapping Workshops</text>
-
-      <rect class="task-bar" x="285" y="362" width="38" height="20" rx="4" fill="#97C459"/>
-      <text class="task-label" x="14" y="376">Pré-mapping IA Academies</text>
-
-      <g>
-        <polygon points="323,373 335,361 347,373 335,385" fill="#548235"/>
-        <text class="milestone-label" x="335" y="355" text-anchor="middle" fill="#548235">12/05 Atelier 1</text>
-      </g>
-
-      <rect class="task-bar" x="350" y="388" width="80" height="20" rx="4" fill="#548235"/>
-      <text class="task-label" x="14" y="402">Atelier Academies 2/2</text>
-
-      <rect class="task-bar" x="395" y="414" width="100" height="20" rx="4" fill="#97C459"/>
-      <text class="task-label" x="14" y="428">Consolidation + retex pilote</text>
-
-      <rect class="task-bar" x="285" y="440" width="100" height="20" rx="4" fill="#97C459"/>
-      <text class="task-label" x="14" y="454">Identification interlocuteurs FR + WO</text>
-
-      <rect class="task-bar" x="395" y="466" width="100" height="20" rx="4" fill="#548235"/>
-      <text class="task-label" x="14" y="480">Ateliers Catalog France (×2 demi-j)</text>
-
-      <rect class="task-bar" x="395" y="492" width="100" height="20" rx="4" fill="#548235"/>
-      <text class="task-label" x="14" y="506">Atelier WO-1 (Scientifique + Medical Affairs)</text>
-
-      <rect class="task-bar" x="395" y="518" width="100" height="20" rx="4" fill="#548235"/>
-      <text class="task-label" x="14" y="532">Atelier WO-2 (Produit + Marketing + Sales)</text>
-
-      <rect class="task-bar" x="395" y="544" width="100" height="20" rx="4" fill="#548235"/>
-      <text class="task-label" x="14" y="558">Atelier WO-3 (Train the trainer)</text>
-    </g>
-
-    <!-- ===== Governance ===== -->
-    <g class="gantt-row" data-row="c4">
-      <rect x="0" y="570" width="1100" height="160" fill="#E4D4F4" opacity="0.4"/>
-      <text class="swimlane-label" x="14" y="590" fill="#7030A0">Governance</text>
-
-      <rect class="task-bar" x="290" y="602" width="93" height="20" rx="4" fill="#AFA9EC"/>
-      <text class="task-label" x="14" y="616">Doc cycle de vie catalog LMS</text>
-
-      <rect class="task-bar" x="395" y="628" width="90" height="20" rx="4" fill="#7030A0"/>
-      <text class="task-label" x="14" y="642">Gouvernance titres + descriptions</text>
-
-      <rect class="task-bar" x="395" y="654" width="90" height="20" rx="4" fill="#7030A0"/>
-      <text class="task-label" x="14" y="668">Gouvernance availability</text>
-
-      <rect class="task-bar" x="495" y="680" width="100" height="20" rx="4" fill="#AFA9EC"/>
-      <text class="task-label" x="14" y="694">Gouvernance mapping skills</text>
-
-      <rect class="task-bar" x="495" y="706" width="100" height="20" rx="4" fill="#AFA9EC"/>
-      <text class="task-label" x="14" y="720">Articulation Skills Lab</text>
-    </g>
-
-    <g id="mvp">
-      <line x1="793" y1="50" x2="793" y2="745" stroke="#D44233" stroke-width="1.5" stroke-dasharray="5 3"/>
-      <polygon points="779,765 807,765 793,752" fill="#D44233"/>
-      <text class="milestone-label" x="793" y="785" text-anchor="middle" fill="#D44233" font-size="12">🎯 MVP atteint</text>
-    </g>
-
-    <g id="today">
-      <line id="today-line" x1="306" y1="50" x2="306" y2="745" stroke="#D44233" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.55"/>
-      <text id="today-label" class="milestone-label" x="306" y="760" text-anchor="middle" fill="#D44233" opacity="0.7">aujourd'hui</text>
-    </g>
-
+  <svg class="gantt" viewBox="0 0 1100 880" xmlns="http://www.w3.org/2000/svg">
+<g id="month-header">
+<text class="month-label" x="358.1" y="20" text-anchor="middle">mai</text>
+<line x1="280.0" y1="6" x2="280.0" y2="26" class="month-sep"/>
+<text class="month-label" x="533.8" y="20" text-anchor="middle">juin</text>
+<line x1="436.2" y1="6" x2="436.2" y2="26" class="month-sep"/>
+<text class="month-label" x="709.5" y="20" text-anchor="middle">juillet</text>
+<line x1="631.4" y1="6" x2="631.4" y2="26" class="month-sep"/>
+<text class="month-label" x="885.2" y="20" text-anchor="middle">août</text>
+<line x1="787.6" y1="6" x2="787.6" y2="26" class="month-sep"/>
+<text class="month-label" x="1041.4" y="20" text-anchor="middle">septembre</text>
+<line x1="982.9" y1="6" x2="982.9" y2="26" class="month-sep"/>
+<line x1="1100" y1="6" x2="1100" y2="26" class="month-sep"/>
+</g>
+<g id="week-header">
+<text class="week-label" x="299.5" y="48" text-anchor="middle">04</text>
+<text class="week-label" x="338.6" y="48" text-anchor="middle">11</text>
+<text class="week-label" x="377.6" y="48" text-anchor="middle">18</text>
+<text class="week-label" x="416.7" y="48" text-anchor="middle">25</text>
+<text class="week-label" x="455.7" y="48" text-anchor="middle">01</text>
+<text class="week-label" x="494.8" y="48" text-anchor="middle">08</text>
+<text class="week-label" x="533.8" y="48" text-anchor="middle">15</text>
+<text class="week-label" x="572.9" y="48" text-anchor="middle">22</text>
+<text class="week-label" x="611.9" y="48" text-anchor="middle">29</text>
+<text class="week-label" x="651.0" y="48" text-anchor="middle">06</text>
+<text class="week-label" x="690.0" y="48" text-anchor="middle">13</text>
+<text class="week-label" x="729.0" y="48" text-anchor="middle">20</text>
+<text class="week-label" x="768.1" y="48" text-anchor="middle">27</text>
+<text class="week-label" x="807.1" y="48" text-anchor="middle">03</text>
+<text class="week-label" x="846.2" y="48" text-anchor="middle">10</text>
+<text class="week-label" x="885.2" y="48" text-anchor="middle">17</text>
+<text class="week-label" x="924.3" y="48" text-anchor="middle">24</text>
+<text class="week-label" x="963.3" y="48" text-anchor="middle">31</text>
+<text class="week-label" x="1002.4" y="48" text-anchor="middle">07</text>
+<text class="week-label" x="1041.4" y="48" text-anchor="middle">14</text>
+<text class="week-label" x="1080.5" y="48" text-anchor="middle">21</text>
+</g>
+<g id="grid">
+<line x1="280.0" y1="56" x2="280.0" y2="800" class="grid-line"/>
+<line x1="319.0" y1="56" x2="319.0" y2="800" class="grid-line"/>
+<line x1="358.1" y1="56" x2="358.1" y2="800" class="grid-line"/>
+<line x1="397.1" y1="56" x2="397.1" y2="800" class="grid-line"/>
+<line x1="436.2" y1="56" x2="436.2" y2="800" class="grid-line"/>
+<line x1="475.2" y1="56" x2="475.2" y2="800" class="grid-line"/>
+<line x1="514.3" y1="56" x2="514.3" y2="800" class="grid-line"/>
+<line x1="553.3" y1="56" x2="553.3" y2="800" class="grid-line"/>
+<line x1="592.4" y1="56" x2="592.4" y2="800" class="grid-line"/>
+<line x1="631.4" y1="56" x2="631.4" y2="800" class="grid-line"/>
+<line x1="670.5" y1="56" x2="670.5" y2="800" class="grid-line"/>
+<line x1="709.5" y1="56" x2="709.5" y2="800" class="grid-line"/>
+<line x1="748.6" y1="56" x2="748.6" y2="800" class="grid-line"/>
+<line x1="787.6" y1="56" x2="787.6" y2="800" class="grid-line"/>
+<line x1="826.7" y1="56" x2="826.7" y2="800" class="grid-line"/>
+<line x1="865.7" y1="56" x2="865.7" y2="800" class="grid-line"/>
+<line x1="904.8" y1="56" x2="904.8" y2="800" class="grid-line"/>
+<line x1="943.8" y1="56" x2="943.8" y2="800" class="grid-line"/>
+<line x1="982.9" y1="56" x2="982.9" y2="800" class="grid-line"/>
+<line x1="1021.9" y1="56" x2="1021.9" y2="800" class="grid-line"/>
+<line x1="1061.0" y1="56" x2="1061.0" y2="800" class="grid-line"/>
+<line x1="1100.0" y1="56" x2="1100.0" y2="800" class="grid-line"/>
+<line x1="280.0" y1="56" x2="280.0" y2="800" class="month-grid-line"/>
+<line x1="436.2" y1="56" x2="436.2" y2="800" class="month-grid-line"/>
+<line x1="631.4" y1="56" x2="631.4" y2="800" class="month-grid-line"/>
+<line x1="787.6" y1="56" x2="787.6" y2="800" class="month-grid-line"/>
+<line x1="982.9" y1="56" x2="982.9" y2="800" class="month-grid-line"/>
+<line x1="1100" y1="56" x2="1100" y2="800" class="month-grid-line"/>
+</g>
+<g class="gantt-row" data-row="c1">
+<rect x="0" y="60" width="1100" height="144" fill="#DAE3F3" opacity="0.4"/>
+<text class="swimlane-label" x="14" y="82" fill="#0078D4">Technical Pipeline</text>
+<rect class="task-bar" x="280.0" y="90" width="106.0" height="22" rx="4" fill="#85B7EB"/>
+<text class="task-label" x="14" y="104">Test rapprochement formations &amp; skills</text>
+<rect class="task-bar" x="280.0" y="116" width="106.0" height="22" rx="4" fill="#0078D4"/>
+<text class="task-label" x="14" y="130">Envoi transcript user → Skills platform</text>
+<rect class="task-bar" x="397.1" y="142" width="145.0" height="22" rx="4" fill="#85B7EB"/>
+<text class="task-label" x="14" y="156">Intégration groupe d'availability</text>
+<rect class="task-bar" x="603.5" y="168" width="345.9" height="22" rx="4" fill="#85B7EB"/>
+<text class="task-label" x="14" y="182">Bascule API pérenne LXP &amp; Skills platform</text>
+</g>
+<g class="gantt-row" data-row="c2">
+<rect x="0" y="210" width="1100" height="144" fill="#FCE5D4" opacity="0.4"/>
+<text class="swimlane-label" x="14" y="232" fill="#C55A11">Catalog Data Quality</text>
+<rect class="task-bar" x="280.0" y="240" width="156.2" height="22" rx="4" fill="#F0997B"/>
+<text class="task-label" x="14" y="254">Sprint OneData HR — usage formations</text>
+<rect class="task-bar" x="436.2" y="266" width="167.3" height="22" rx="4" fill="#F0997B"/>
+<text class="task-label" x="14" y="280">Sprint OneData HR — LAT</text>
+<rect class="task-bar" x="436.2" y="292" width="262.2" height="22" rx="4" fill="#C55A11"/>
+<text class="task-label" x="14" y="306">Audit Corporate eLearning (~500)</text>
+<rect class="task-bar" x="603.5" y="318" width="172.9" height="22" rx="4" fill="#F0997B"/>
+<text class="task-label" x="14" y="332">Audits Catalog FR + L&amp;D World Operations</text>
+</g>
+<g class="gantt-row" data-row="c3">
+<rect x="0" y="360" width="1100" height="248" fill="#E2EFDA" opacity="0.4"/>
+<text class="swimlane-label" x="14" y="382" fill="#548235">Mapping Workshops</text>
+<rect class="task-bar" x="280.0" y="390" width="44.6" height="22" rx="4" fill="#97C459"/>
+<text class="task-label" x="14" y="404">Pré-mapping IA Academies</text>
+<rect class="task-bar" x="397.1" y="416" width="39.0" height="22" rx="4" fill="#548235"/>
+<text class="task-label" x="14" y="430">Atelier Academies 2/2</text>
+<rect class="task-bar" x="436.2" y="442" width="106.0" height="22" rx="4" fill="#97C459"/>
+<text class="task-label" x="14" y="456">Consolidation + retex pilote</text>
+<rect class="task-bar" x="319.0" y="468" width="117.1" height="22" rx="4" fill="#97C459"/>
+<text class="task-label" x="14" y="482">Identification interlocuteurs FR + WO</text>
+<rect class="task-bar" x="475.2" y="494" width="106.0" height="22" rx="4" fill="#548235"/>
+<text class="task-label" x="14" y="508">Ateliers Catalog France (×2 demi-j)</text>
+<rect class="task-bar" x="475.2" y="520" width="66.9" height="22" rx="4" fill="#548235"/>
+<text class="task-label" x="14" y="534">Atelier WO-1 (Scientifique + Medical Affairs)</text>
+<rect class="task-bar" x="514.3" y="546" width="66.9" height="22" rx="4" fill="#548235"/>
+<text class="task-label" x="14" y="560">Atelier WO-2 (Produit + Marketing + Sales)</text>
+<rect class="task-bar" x="553.3" y="572" width="50.2" height="22" rx="4" fill="#548235"/>
+<text class="task-label" x="14" y="586">Atelier WO-3 (Train the trainer)</text>
+</g>
+<g class="gantt-row" data-row="c4">
+<rect x="0" y="614" width="1100" height="170" fill="#E4D4F4" opacity="0.4"/>
+<text class="swimlane-label" x="14" y="636" fill="#7030A0">Governance</text>
+<rect class="task-bar" x="280.0" y="644" width="156.2" height="22" rx="4" fill="#AFA9EC"/>
+<text class="task-label" x="14" y="658">Doc cycle de vie catalog LMS</text>
+<rect class="task-bar" x="436.2" y="670" width="167.3" height="22" rx="4" fill="#7030A0"/>
+<text class="task-label" x="14" y="684">Gouvernance titres + descriptions</text>
+<rect class="task-bar" x="436.2" y="696" width="167.3" height="22" rx="4" fill="#7030A0"/>
+<text class="task-label" x="14" y="710">Gouvernance availability</text>
+<rect class="task-bar" x="603.5" y="722" width="172.9" height="22" rx="4" fill="#AFA9EC"/>
+<text class="task-label" x="14" y="736">Gouvernance mapping skills</text>
+<rect class="task-bar" x="603.5" y="748" width="172.9" height="22" rx="4" fill="#AFA9EC"/>
+<text class="task-label" x="14" y="762">Articulation Skills Lab</text>
+</g>
+<polygon points="317.6,401 324.6,392 331.6,401 324.6,410" fill="#548235"/>
+<text class="milestone-label" x="324.6" y="387" text-anchor="middle" fill="#548235">12/05 Atelier 1</text>
+<polygon points="362.3,101 369.3,92 376.3,101 369.3,110" fill="#0078D4"/>
+<text class="milestone-label" x="369.3" y="87" text-anchor="middle" fill="#0078D4">20/05 unification LMS</text>
+<polygon points="591.0,101 598.0,92 605.0,101 598.0,110" fill="#0078D4"/>
+<text class="milestone-label" x="598.0" y="123" text-anchor="middle" fill="#0078D4">Bout-en-bout</text>
+<g id="mvp">
+<line x1="1027.5" y1="56" x2="1027.5" y2="825" stroke="#D44233" stroke-width="1.5" stroke-dasharray="5 3"/>
+<polygon points="1015.5,845 1039.5,845 1027.5,832" fill="#D44233"/>
+<text class="milestone-label" x="1027.5" y="862" text-anchor="middle" fill="#D44233" font-size="12">🎯 MVP atteint</text>
+</g>
+<g id="today">
+<line id="today-line" x1="-10" y1="56" x2="-10" y2="825" stroke="#D44233" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.55"/>
+<text id="today-label" class="milestone-label" x="-10" y="845" text-anchor="middle" fill="#D44233" opacity="0.7"></text>
+</g>
   </svg>
   </div>
 
   <div class="legend">
-    <span class="legend-item"><span class="legend-bar" style="background: #24226A;"></span>Action courte (≤ 1 mois)</span>
-    <span class="legend-item"><span class="legend-bar" style="background: #85B7EB;"></span>Action longue / continue</span>
+    <span class="legend-item"><span class="legend-bar" style="background: var(--c1);"></span>Action courte (≤ 1 mois)</span>
+    <span class="legend-item"><span class="legend-bar" style="background: var(--c1-lite);"></span>Action longue / continue</span>
     <span class="legend-item"><span class="legend-diamond"></span>Jalon clé</span>
-    <span class="legend-item" style="color: #D44233;"><span class="legend-line"></span>Aujourd'hui</span>
-    <span class="legend-item" style="color: #D44233;"><span class="legend-line"></span>MVP atteint (septembre 2026)</span>
+    <span class="legend-item" style="color: var(--red);"><span class="legend-line"></span>Aujourd'hui</span>
+    <span class="legend-item" style="color: var(--red);"><span class="legend-line"></span>MVP atteint (septembre 2026)</span>
   </div>
 
   <footer>
-    Career Path — Stream Data &amp; Tools <span class="accent">·</span> Version <span id="version">3.0</span>
+    Career Path — Stream Data &amp; Tools <span class="accent">·</span> Version <span id="version">4.0 — granularité semaine</span>
   </footer>
 
 </div>
 
 <script>
 const months = {
-  start: new Date(2026, 4, 1),
-  end:   new Date(2026, 11, 31),
+  start: new Date(2026, 4, 4),
+  end:   new Date(2026, 8, 27),
   xStart: 280,
   xEnd:   1100
 };
 
-function dateToX(date) {
+function dateToX(d) {
   const total = months.end - months.start;
-  const ratio = (date - months.start) / total;
+  const ratio = (d - months.start) / total;
   return months.xStart + ratio * (months.xEnd - months.xStart);
 }
 
@@ -377,6 +311,9 @@ if (today >= months.start && today <= months.end) {
   line.setAttribute('x2', x);
   lab.setAttribute('x', x);
   lab.textContent = 'auj. ' + today.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' });
+} else {
+  // Hors période : on cache le marqueur today
+  document.getElementById('today').style.display = 'none';
 }
 
 document.querySelectorAll('.filter-btn[data-filter]').forEach(btn => {
@@ -397,3 +334,4 @@ document.querySelectorAll('.filter-btn[data-filter]').forEach(btn => {
 
 </body>
 </html>
+
